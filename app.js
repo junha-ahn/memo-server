@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const compression = require('compression');
 
+const routes = $require("routes");
+
 app.use(helmet());
 app.use(helmet.noCache());
 app.use(compression());
@@ -19,11 +21,6 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.status(200).json({
-    message: 'Hello World'
-  })
-});
-
+routes(app);
 
 module.exports = app;
