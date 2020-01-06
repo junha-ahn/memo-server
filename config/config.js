@@ -1,12 +1,18 @@
+const getDBURL = (DB_NAME) => {
+  if (process.env.DB_USER && process.env.DB_PWD) return `mongodb://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.DB_HOST}:${process.env.DB_HOST}/${process.env.DB_NAME}`
+  
+  return `mongodb://${process.env.DB_HOST}:${process.env.DB_HOST}/${DB_NAME}`
+}
+
 const configs = {
   production: {
-    uri: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDR}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME}`,
+    uri: getDBURL(process.env.DB_NAME),
   },
   development: {
-    uri: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDR}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME_DEV}`,
+    uri:  getDBURL(process.env.DB_NAME_DEV),
   },
   test: {
-    uri: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDR}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME_TEST}`,
+    uri:getDBURL(process.env.DB_NAME_TEST),
   },
 };
 

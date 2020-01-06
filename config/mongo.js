@@ -7,11 +7,10 @@ module.exports = () => {
     }
     const config = require('./config')[process.env.NODE_ENV ? process.env.NODE_ENV : 'development'];
     mongoose.connect(config.uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-      console.log('hi')
       if (err) {
-        console.log(`mongodb ${config} connection error`, err);
+        console.log(`mongodb connection error`, err);
       } else {
-        console.log(`mongodb ${config} connection success`);
+        console.log(`mongodb connection success`);
       }
     });
   };
