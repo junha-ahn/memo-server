@@ -2,5 +2,5 @@
 
 
 ###
-GET {{domain}}/api/auth/test HTTP/1.1
+GET {{domain}}/api/ HTTP/1.1
 Content-Type: application/json

@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = () => {
 	const app = Router();
-  require('./routes/auth')(app);
+  require('./routes/test')(app);
   
   return app;
 };
