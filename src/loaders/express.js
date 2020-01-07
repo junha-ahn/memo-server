@@ -6,7 +6,7 @@ const compression = require('compression');
 const cors = require("cors");
 // const connect = require('./src/loaders/mongoose');
 const config = $require('config')
-const routes = $require('api')
+const routes = $require('controllers')
 
 module.exports = app => {
   app.use(helmet());
