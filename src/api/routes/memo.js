@@ -8,9 +8,9 @@ module.exports = app => {
 
   router.post('/', memeController.create);
 
-  router.update('/:id', memeController.update);
+  router.put('/:id', memeController.update);
 
   router.delete('/:id', memeController.delete);
 
-  router.update('/fix/:id', memeController.fix);
+  router.put('/fix/:id', memeController.fix);
 };

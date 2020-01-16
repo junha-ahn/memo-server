@@ -1,17 +1,13 @@
-exports.me = (req, res) => {
-};
+// const AuthService = $require('api/services/auth')
 
-exports.signin = (req, res) => {
-};
+exports.me = (req, res) => {};
 
-exports.signup = (req, res) => {
-};
+exports.signin = (req, res) => {};
 
-exports.logout = (req, res) => {
-};
+exports.signup = (req, res) => {};
 
-exports.existsUsername = (req, res) => {
-};
+exports.logout = (req, res) => {};
 
-exports.deleteAccount = (req, res) => {
-};
+exports.existsUsername = (req, res) => {};
+
+exports.deleteAccount = (req, res) => {};
