@@ -4,6 +4,6 @@ const {
 } = $require('api/controllers/test');
 
 module.exports = app => {
-  app.use('/', router)
+  app.use('/', router);
   router.get("/", getTest);
 };
