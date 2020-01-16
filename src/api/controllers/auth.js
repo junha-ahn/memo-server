@@ -1,11 +1,15 @@
-exports.me = (req, res) => {};
+const {
+  container
+} = $require('api/middlewares');
 
-exports.signin = (req, res) => {};
+exports.me = container(async req => {});
 
-exports.signup = (req, res) => {};
+exports.signin = container(async req => {});
 
-exports.logout = (req, res) => {};
+exports.signup = container(async req => {});
 
-exports.existsUsername = (req, res) => {};
+exports.logout = container(async req => {});
 
-exports.deleteAccount = (req, res) => {};
+exports.existsUsername = container(async req => {});
+
+exports.deleteAccount = container(async req => {});
