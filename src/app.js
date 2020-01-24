@@ -16,6 +16,8 @@ function startServer() {
       🛡️  Server listening on port: ${config.port} 🛡️
     `);
   });
+
+  module.exports = app
 }
 
 startServer();
