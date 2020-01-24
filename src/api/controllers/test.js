@@ -1,11 +1,10 @@
 const {
-  container,
   success,
   fail,
 } = $require('api/middlewares');
 
-exports.getTest = container(async req => {
+exports.getTest = async req => {
   return success.crud.getItem({
     message: 'Hello World!'
   });
-})
+}
