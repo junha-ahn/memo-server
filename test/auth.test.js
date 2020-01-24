@@ -58,7 +58,7 @@ describe('User', () => {
       chai.request(server)
         .post('/api/auth/signin')
         .send({
-          eamil: 'email@email.com'
+          eamil: 'email@email.com',
           password: '4321',
         })
         .end((err, res) => {
@@ -71,7 +71,7 @@ describe('User', () => {
       chai.request(server)
         .post('/api/auth/signin')
         .send({
-          eamil: 'email@email.com'
+          eamil: 'email@email.com',
           password: '1234',
         })
         .end((err, res) => {

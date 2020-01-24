@@ -3,10 +3,6 @@ const Response = (statusStep = 1) => (
   message = '서버 내부에 장애가 발생했습니다.',
   data = null,
 ) => {
-  if (detailedStatusCode < 0 || detailedStatusCode > 99) {
-    throw new Error('detailedStatusCode for Response is invalid')
-  }
-
   return {
     status: (statusStep === 0),
     httpCode,
