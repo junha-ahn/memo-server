@@ -10,6 +10,6 @@ exports.signup = container(async req => {});
 
 exports.logout = container(async req => {});
 
-exports.existsUsername = container(async req => {});
+exports.existsEmail = container(async req => {});
 
 exports.deleteAccount = container(async req => {});

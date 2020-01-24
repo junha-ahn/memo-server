@@ -15,7 +15,7 @@ module.exports = app => {
 
   router.post('/logout', container(AuthController.logout));
 
-  router.get('/exists/username/:username', container(AuthController.existsUsername));
+  router.get('/exists/email/:email', container(AuthController.existsEmail));
 
   router.delete('/account', container(AuthController.deleteAccount));
 };
