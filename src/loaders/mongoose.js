@@ -15,7 +15,9 @@ module.exports = async () => {
     console.log('mongodb connection is lost, trying to re-connect to mongodb.');
     // connect();
   });
-  const connection = await mongoose.connect(config.dbURL, { useNewUrlParser: true, useUnifiedTopology: true });
-
+  const connection = await mongoose.connect(config.dbURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
   return connection.connection.db;
 };
