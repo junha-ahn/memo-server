@@ -6,10 +6,10 @@ const session = require("express-session");
 const cors = require("cors");
 const config = $require("config");
 const routes = $require("api");
-const RedisStore = require('connect-redis')(session);
+const RedisStore = require("connect-redis")(session);
 const {
   client: redisClient
-} = require('./redis');
+} = require("./redis");
 
 module.exports = app => {
   app.use(helmet());
@@ -27,14 +27,13 @@ module.exports = app => {
         secure: false
       },
       store: process.env.REDIS_ENABLE === 1 ?
-        new RedisStore({
+        store : new RedisStore({
           client: redisClient,
           host: process.env.REDIS_HOST,
           port: process.env.REDIS_PORT,
           logErrors: true,
           ttl: 60 * 60 * 24 // in seconds (redis will delete automatically)
-        }) :
-        undefined
+        })
     })
   );
   app.use(morgan(process.env.NODE_ENV == "production" ? "combined" : "dev"));

@@ -1,5 +1,4 @@
-const client = process.env.REDIS_ENABLE === 1 ?
-  require('redis').createClient() : undefined;
+const client = require('redis').createClient();
 
 module.exports = {
   client,
