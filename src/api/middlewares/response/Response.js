@@ -1,6 +1,5 @@
 const Response = (statusStep = 1) => (
   httpCode = 500,
-  detailedStatusCode = 0,
   message = '서버 내부에 장애가 발생했습니다.',
   data = null,
 ) => {
@@ -8,11 +7,9 @@ const Response = (statusStep = 1) => (
     throw new Error('detailedStatusCode for Response is invalid')
   }
 
-  const statusCode = statusStep * 100 + detailedStatusCode
   return {
     status: (statusStep === 0),
     httpCode,
-    statusCode,
     message,
     data,
   }

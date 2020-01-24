@@ -10,39 +10,39 @@ module.exports = (Response) => {
   const fail = {}
 
   fail.notFound = () => Unable(
-    404, 10,
+    404,
     '해당 항목이 없습니다.'
   )
 
   success.getItem = singleEntity => Success(
-    200, 30,
+    200,
     '항목 조회에 성공했습니다.',
     singleEntity,
   )
 
   success.getItems = (results, count) => Success(
-    200, 35,
+    200,
     '목록을 조회했습니다.', {
       results,
       count
     },
   )
 
-  success.createItem = (id, data = {}) => Success(
-    201, 40,
+  success.createItem = (_id, data = {}) => Success(
+    201,
     '항목을 추가했습니다', {
-      id,
+      _id,
       ...data
     },
   )
 
   success.updateItem = () => Success(
-    201, 50,
+    201,
     '항목을 업데이트했습니다.'
   )
 
   success.deleteItem = () => Success(
-    200, 60,
+    200,
     '항목을 제거했습니다',
   )
 
