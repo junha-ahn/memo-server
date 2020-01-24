@@ -67,4 +67,4 @@
 
 `Sam Ouinn`님의 [Bulletproof node.js project architecture](https://dev.to/santypk4/bulletproof-node-js-project-architecture-4epf)
 
-`Samuele Zaza`님의 [Test a Node RESTful API with Mocha and Chai](https://scotch.io/tutorials/test-a-node-restful-api-with-mocha-and-chai)
+`Ekunola Ezekiel`님의 [Testing Node API with Mocha & Chai](https://dev.to/easybuoy/testing-node-api-with-mocha-chai-248b)
