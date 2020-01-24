@@ -13,16 +13,16 @@ module.exports = app => {
   app.use(helmet.noCache());
   app.use(compression());
   app.use(cors());
-  
+
   app.use(cookieParser(process.env.COOKE_SECRET));
   app.use(morgan(process.env.NODE_ENV == 'production' ? 'combined' : 'dev'));
-  
+
   app.use(bodyParser.urlencoded({
     extended: false,
   }));
-  
+
   app.use(bodyParser.json());
-  
+
   app.use(config.api.prefix, routes());
 
   app.all("*", (req, res, next) => {
