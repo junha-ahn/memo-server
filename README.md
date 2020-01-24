@@ -13,6 +13,8 @@
 
 # **문서**
 
+[프로젝트 관리](https://github.com/junha-ahn/memo-server/projects/1)
+
 [API Server Github](https://github.com/junha-ahn/memo-server)
 
 [API Document](https://app.gitbook.com/@junha-ahn-dev/s/memo-back/)
