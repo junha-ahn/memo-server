@@ -1,9 +1,13 @@
-exports.get = (req, res) => {};
+const {
+  container
+} = $require('api/middlewares');
 
-exports.create = (req, res) => {};
+exports.get = container(async req => {});
 
-exports.update = (req, res) => {};
+exports.create = container(async req => {});
 
-exports.delete = (req, res) => {};
+exports.update = container(async req => {});
 
-exports.fix = (req, res) => {};
+exports.delete = container(async req => {});
+
+exports.fix = container(async req => {});

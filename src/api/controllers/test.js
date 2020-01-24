@@ -1,5 +1,11 @@
-exports.getTest = (req, res) => {
-  res.status(200).json({
-    message: 'Hello World',
-  })
-};
+const {
+  container,
+  success,
+  fail,
+} = $require('api/middlewares');
+
+exports.getTest = container(async req => {
+  return success.crud.getItem({
+    message: 'Hello World!'
+  });
+})
