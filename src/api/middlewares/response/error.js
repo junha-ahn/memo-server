@@ -44,9 +44,9 @@ module.exports = (Response) => {
     data
   )
 
-  fail.conflict = data => BadRequest(
+  fail.conflict = (msg = '요청이 현재 서버 상태와 충돌됩니다.', data) => BadRequest(
     409,
-    '요청이 현재 서버 상태와 충돌됩니다.',
+    msg,
     data
   )
 

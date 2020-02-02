@@ -26,6 +26,7 @@ const mw = (validators) => {
 };
 
 module.exports = {
+  ...validator,
   resolveValidation,
   resolveValidationAndResonse,
   presets,
