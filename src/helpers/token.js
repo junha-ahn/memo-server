@@ -8,19 +8,18 @@ module.exports = {
         error ? reject(error) : resolve(data)
       )
     ),
-  generateToken: (data, clientVerifier) => {
-    data.clientVerifier = clientVerifier;
-    return new Promise((resolve, reject) =>
-      jwt.sign(
-        data,
-        SECRET_KEY,
-        {
+  generateToken: (data, clientVerifier) =>
+    new Promise((resolve, reject) =>
+      jwt.sign({
+          ...data,
+          clientVerifier,
+        },
+        SECRET_KEY, {
           expiresIn: "7d"
         },
         (error, token) => (error ? reject(error) : resolve(token))
       )
-    );
-  },
+    ),
   getToken(req) {
     const bearerHeader = req.headers.authorization;
 

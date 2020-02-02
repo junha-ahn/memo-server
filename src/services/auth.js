@@ -26,6 +26,24 @@ module.exports = class UserService {
     return user
   }
   async SignIn(email, password) {
+    const clientVerifier = new Date().valueOf()
+    const userRecord = await this.userModel.findOne({
+      email
+    });
+    const user = userRecord.toObject();
+    this.logger.silly('Checking password');
+    const validPassword = await bcrypt.compareSync(password, user.password);
+    if (validPassword) {
+      this.logger.silly('Password is valid!');
+      this.logger.silly('Generating JWT');
 
+      Reflect.deleteProperty(user, 'password');
+      return {
+        user,
+        token: await token.generateToken(user, clientVerifier),
+      };
+    } else {
+      // error 처리!!
+    }
   }
 }
