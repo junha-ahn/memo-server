@@ -15,9 +15,9 @@ module.exports = service => async (req, res) => {
     if (e.response) {
       const error = e.response;
       const {
-        status = 500, data = {}
+        httpCode = 500, data = {}
       } = error;
-      res.status(status).json(data);
+      res.status(httpCode).json(data);
     }
     response(fail.error.internalError({
       errorMessage: e.message || ''

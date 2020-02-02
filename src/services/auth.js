@@ -1,7 +1,10 @@
 const {
   bcrypt,
   token,
-} = $require('helpers');
+} = $require('helpers');;
+const {
+  fail,
+} = $require('api/middlewares');
 
 module.exports = class UserService {
   constructor(container) {
@@ -26,25 +29,25 @@ module.exports = class UserService {
     return user
   }
   async SignIn(email, password) {
-    const clientVerifier = new Date().valueOf()
     const userRecord = await this.userModel.findOne({
       email
     });
+    if (!userRecord) throw fail.auth.login();
     const user = userRecord.toObject();
     this.logger.silly('Checking password');
     const validPassword = await bcrypt.compareSync(password, user.password);
     if (validPassword) {
       this.logger.silly('Password is valid!');
-      this.logger.silly('Generating JWT');
-
+      const clientVerifier = new Date().valueOf()
       Reflect.deleteProperty(user, 'password');
+      this.logger.silly('Generating JWT');
       return {
         user,
         token: await token.generateToken(user, clientVerifier),
         clientVerifier,
       };
     } else {
-      // error 처리!!
+      throw fail.auth.login()
     }
   }
   async FindEmail(email) {
