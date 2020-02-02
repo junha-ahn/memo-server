@@ -47,4 +47,10 @@ module.exports = class UserService {
       // error 처리!!
     }
   }
+  async FindEmail(email) {
+    const userRecord = await this.userModel.findOne({
+      email
+    });
+    return userRecord;
+  }
 }

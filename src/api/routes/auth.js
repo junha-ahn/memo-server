@@ -51,16 +51,25 @@ module.exports = app => {
       return resolveDB.create(userRecord)
     }));
 
-  router.post('/logout', container(async req => {
-    logout(req);
-    return success.auth.logout();
-  }));
+  router.post('/logout',
+    container(async req => {
+      logout(req);
+      return success.auth.logout();
+    }));
 
-  router.get('/exists/email/:email', container(async req => {
+  router.get('/exists/email/:email',
+    container(async req => {
+      const email = req.params.email;
+      const logger = Container.get('logger');
+      logger.debug('Calling Exists-Email endpoint with params: %o', req.params)
+      const authServiceInstance = Container.get(AuthService);
+      const userRecord = await authServiceInstance.FindEmail(email);
+      if (userRecord) return success.crud.getItem();
+      return fail.crud.notFound();
+    }));
 
-  }));
+  router.delete('/account',
+    container(async req => {
 
-  router.delete('/account', container(async req => {
-
-  }));
+    }));
 };
