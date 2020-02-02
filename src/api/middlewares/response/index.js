@@ -7,7 +7,6 @@ const error = require('./error')(Response)
 const sendResponse = res => (result = {}) => (
   res.status(result.httpCode || 500).send({
     status: result.status || false,
-    statusCode: result.statusCode || 100,
     message: result.message || '서버 내부에 장애가 발생했습니다.',
     data: result.data,
   }))
