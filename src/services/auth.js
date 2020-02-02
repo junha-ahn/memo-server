@@ -53,4 +53,20 @@ module.exports = class UserService {
     });
     return userRecord;
   }
+  async deleteUser(_id, password) {
+    const userRecord = await this.userModel.findOne({
+      _id
+    });
+    const user = userRecord.toObject();
+    this.logger.silly('Checking password');
+    const validPassword = await bcrypt.compareSync(password, user.password);
+    if (validPassword) {
+      this.logger.silly('Password is valid!');
+      return await this.userModel.deleteOne({
+        _id
+      })
+    } else {
+
+    }
+  }
 }

@@ -20,8 +20,18 @@ const getItem = result => {
   }
 }
 
+const remove = result => {
+  try {
+    return result && result.deletedCount ?
+      success.crud.deleteItem() :
+      fail.crud.notFound()
+  } catch (err) {
+    throw err
+  }
+}
 
 module.exports = {
   create,
   getItem,
+  delete: remove,
 };

@@ -70,6 +70,10 @@ module.exports = app => {
 
   router.delete('/account',
     container(async req => {
-
+      const password = req.body.password;
+      const logger = Container.get('logger');
+      logger.debug('Calling (delete) Account endpoint with body: %o', req.body)
+      const authServiceInstance = Container.get(AuthService);
+      return resolveDB.delete(await authServiceInstance.deleteUser(req.currentUser._id, password));
     }));
 };
