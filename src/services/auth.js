@@ -41,6 +41,7 @@ module.exports = class UserService {
       return {
         user,
         token: await token.generateToken(user, clientVerifier),
+        clientVerifier,
       };
     } else {
       // error 처리!!

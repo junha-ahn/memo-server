@@ -7,28 +7,38 @@ const {
   container,
   resolveDB,
 } = $require('api/middlewares');
+const {
+  token: {
+    logout,
+    getToken,
+  }
+} = $require('helpers');
 
 module.exports = app => {
   app.use('/auth', router);
 
   router.get('/me', container(async req => {
-
+    return success.auth.authentication(getToken(req), req.currentUser);
   }));
 
-  router.post('/signin', container(async req => {
-    const {
-      email,
-      password
-    } = req.body;
-    const logger = Container.get('logger');
-    logger.debug('Calling Sign-In endpoint with body: %o', req.body)
-    const authServiceInstance = Container.get(AuthService);
-    const {
-      token,
-      user
-    } = await authServiceInstance.SignIn(email, password);
-    return success.auth.login(token, user)
-  }));
+  router.post('/signin',
+    container(async req => {
+      const {
+        email,
+        password
+      } = req.body;
+      const logger = Container.get('logger');
+      logger.debug('Calling Sign-In endpoint with body: %o', req.body)
+      const authServiceInstance = Container.get(AuthService);
+      const {
+        token,
+        user,
+        clientVerifier,
+      } = await authServiceInstance.SignIn(email, password);
+      req.session.clientVerifier = clientVerifier;
+      return success.auth.login(token, user)
+
+    }));
 
   router.post('/signup',
     // email 중복 체크 검사
@@ -41,7 +51,10 @@ module.exports = app => {
       return resolveDB.create(userRecord)
     }));
 
-  router.post('/logout', container(async req => {}));
+  router.post('/logout', container(async req => {
+    logout(req);
+    return success.auth.logout();
+  }));
 
   router.get('/exists/email/:email', container(async req => {
 

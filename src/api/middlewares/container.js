@@ -2,7 +2,6 @@ const {
   sendResponse,
   fail
 } = require('./response');
-const Logger = $require('loaders/logger');
 
 module.exports = service => async (req, res) => {
   const response = sendResponse(res);
