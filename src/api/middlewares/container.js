@@ -2,7 +2,6 @@ const {
   sendResponse,
   fail
 } = require('./response');
-const Logger = $require('loaders/logger');
 
 module.exports = service => async (req, res) => {
   const response = sendResponse(res);
@@ -12,7 +11,7 @@ module.exports = service => async (req, res) => {
       errorMessage: '반환값이 명시되지 않았습니다.'
     }));
   } catch (e) {
-    Logger.error(e);
+    console.error(e);
     if (e.response) {
       const error = e.response;
       const {

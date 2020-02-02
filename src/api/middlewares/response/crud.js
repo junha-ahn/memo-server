@@ -28,10 +28,9 @@ module.exports = (Response) => {
     },
   )
 
-  success.createItem = (_id, data = {}) => Success(
+  success.createItem = (data = {}) => Success(
     201,
     '항목을 추가했습니다', {
-      _id,
       ...data
     },
   )
