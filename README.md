@@ -37,7 +37,7 @@
 
 ## 테스트
 
-미지정
+`Mocha` 이용 `SuperTest` 진행
 
 ## 기타
 
@@ -54,14 +54,12 @@
 
 - `Node.js` (`Express.js`)
 - `MongoDB`  with `Moongose`
+- `Redis`
+- `Mocha` - 테스트 프레임워크
 
 ---
 
-- `Redis`
-- 함수형 자바스크립트, `lodash`
-- `Mocha` - 테스트 프레임워크
 - `Docker`
-- `Nginx`
 
 ## **참고**
 
