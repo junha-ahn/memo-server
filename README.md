@@ -19,6 +19,20 @@
 
 [API Document](https://app.gitbook.com/@junha-ahn-dev/s/memo-back/)
 
+# 구조
+
+```
+test                # Test 관련
+src
+│   app.js          # App entry point
+└───api             # Express route 컨트롤러
+└───config          # 환경변수
+└───loaders         # 모듈 로더
+└───models          # DB Models (Moongose)
+└───services        # 비지니스 로직
+└───helpers         # 함수 모음
+```
+
 # 정책
 
 ## 개발 프로세스
