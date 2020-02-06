@@ -65,7 +65,7 @@ src
 ## 기술
 
 - `Node.js` (`Express.js`)
-- `MongoDB`  with `Moongose`
+- `MongoDB`  with `Mongoose`
 - `Redis`
 - `Mocha` - 테스트 프레임워크
 
