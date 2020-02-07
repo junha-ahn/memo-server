@@ -13,7 +13,7 @@ module.exports = service => async (req, res) => {
       errorMessage: '반환값이 명시되지 않았습니다.'
     }));
   } catch (e) {
-    if (config.NODE_ENV === 'development') console.error(e)
+    if (config.NODE_ENV !== 'test') console.error(e)
     if (e.status !== undefined) {
       const httpCode = e.httpCode || 500;
       return res.status(httpCode).json(e);

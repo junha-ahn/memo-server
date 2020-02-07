@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     if (!clientVerifier || req.currentUser.clientVerifier != clientVerifier) throw new Error();
     next();
   } catch (e) {
-    Logger.error('🔥 token blocked!!');
+    Logger.error('⛔  token blocked!!');
     logout(req);
     return sendResponse(res)(fail.auth.tokenForbidden());
   }

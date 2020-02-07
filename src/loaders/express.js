@@ -10,6 +10,10 @@ const RedisStore = require("connect-redis")(session);
 const {
   client: redisClient
 } = require("./redis");
+const {
+  sendResponse,
+  fail
+} = $require('api/middlewares')
 
 module.exports = app => {
   app.use(helmet());
@@ -48,15 +52,14 @@ module.exports = app => {
 
   app.use(config.api.prefix, routes());
 
-  app.all("*", (req, res, next) => {
-    const err = new Error(`Not Found!`);
-    err.status = 404;
-    next(err);
-  });
 
-  app.use((err, req, res, next) => {
-    res.status(err ? err.status : 500).json({
-      err
-    });
-  });
+  app.use((req, res, next) => sendResponse(res)(
+    fail.error.URLNotFound(req.originalUrl)
+  ));
+
+  app.use((err, req, res, next) => console.log(err) || sendResponse(res)(
+    fail.error.internalError({
+      errorMessage: err.message || ''
+    })
+  ));
 };

@@ -6,7 +6,8 @@ const {
   fail,
   validator,
   container,
-  resolveDB
+  resolveDB,
+  isAuth,
 } = $require('api/middlewares');
 const {
   token: {
@@ -20,6 +21,7 @@ module.exports = app => {
 
   router.get(
     '/me',
+    isAuth,
     container(async req => {
       // TOKEN RETURN => DB 조회 변경
       return success.auth.authentication(getToken(req), req.currentUser);
@@ -27,7 +29,7 @@ module.exports = app => {
   );
 
   router.post(
-    '/signin',
+    '/sign-in',
     validator.mw([validator.presets.email, validator.presets.password]),
     container(async req => {
       const {
@@ -51,7 +53,7 @@ module.exports = app => {
   );
 
   router.post(
-    '/signup',
+    '/sign-up',
     validator.mw([
       validator.presets.email,
       validator.presets.password,
