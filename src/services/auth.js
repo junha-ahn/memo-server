@@ -17,6 +17,8 @@ module.exports = class UserService {
     password,
   }) {
     this.logger.silly('Hashing password');
+    if (await authServiceInstance.FindEmail(email)) throw fail.error.conflict('이미 사용중인 이메일입니다.');
+
     const hashedPassword = await bcrypt.hashSync(password);
     this.logger.silly('Creating user db record');
     const userRecord = await this.userModel.create({

@@ -22,7 +22,6 @@ const getDBURL = ({
     `mongodb://${DB_USER}:${DB_PWD}@${DB_HOST}:${DB_PORT}/${DBName}` :
     `mongodb://${DB_HOST}:${DB_PORT}/${DBName}`;
 }
-
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   port: normalizePort(process.argv[2] || process.env.PORT || 3000),
@@ -39,5 +38,5 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly"
   },
   SECRET_KEY: process.env.SECRET_KEY,
-  COOKE_SECRET: process.env.COOKE_SECRET,
+  COOKIE_SECRET: process.env.COOKIE_SECRET,
 };

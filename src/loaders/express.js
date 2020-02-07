@@ -20,10 +20,10 @@ module.exports = app => {
   app.use(helmet.noCache());
   app.use(cors());
 
-  app.use(cookieParser(config.COOKE_SECRET));
+  app.use(cookieParser(config.COOKIE_SECRET));
   app.use(
     session({
-      secret: config.COOKE_SECRET,
+      secret: config.COOKIE_SECRET,
       saveUninitialized: false,
       resave: false,
       cookie: {

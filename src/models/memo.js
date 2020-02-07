@@ -2,17 +2,21 @@ const mongoose = require('mongoose');
 
 const User = require('./user');
 const MemoSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: false,
-  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: User
   },
+  title: {
+    type: String,
+    required: true,
+  },
   content: {
     type: String,
+    required: true
+  },
+  isFixed: {
+    type: Number,
     required: true
   },
   tagIds: [{

@@ -1,5 +1,5 @@
-const Container = require('typedi').Container;
 const router = require('express').Router();
+const Container = require('typedi').Container;
 const TagService = $require('services/tag');
 const {
   success,
@@ -9,12 +9,6 @@ const {
   resolveDB,
   isAuth,
 } = $require('api/middlewares');
-const {
-  token: {
-    logout,
-    getToken
-  }
-} = $require('helpers');
 
 module.exports = app => {
   app.use('/tag', router);
@@ -29,7 +23,7 @@ module.exports = app => {
       const logger = Container.get('logger');
       logger.debug('Calling Get Tag endpoint with params: %o queries: %o', req.params, req.query);
       const tagServiceInstance = Container.get(TagService);
-      return await resolveDB.get(_id)(tagServiceInstance.get(_id)(req.currentUser._id, req.query));
+      return resolveDB.get(_id)(await tagServiceInstance.get(_id)(req.currentUser._id, req.query));
     })
   );
 };

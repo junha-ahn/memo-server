@@ -11,9 +11,19 @@ const create = result => {
   }
 }
 
-const remove = result => {
+const update = async data => {
   try {
-    return result && result.deletedCount ?
+    const result = await data
+    return result.ok ? success.crud.updateItem() : fail.error.BadRequest('변경이 사항 없습니다', result)
+  } catch (err) {
+    throw err
+  }
+}
+
+const remove = async data => {
+  try {
+    const result = await data
+    return result && result.ok ?
       success.crud.deleteItem() :
       fail.crud.notFound()
   } catch (err) {
@@ -51,6 +61,7 @@ const get = _id => async data => {
 module.exports = {
   create,
   delete: remove,
+  update,
   getItem,
   getItems,
   get,
