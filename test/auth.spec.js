@@ -101,7 +101,6 @@ describe('Auth', () => {
   })
   describe('/GET me', () => {
     describe('성공시', () => {
-
       const auth = {};
       before(loginUser(auth));
       it('로그인 후 요청시, 200반환', async () => {
