@@ -1,7 +1,9 @@
+const config = $require('config')
 const {
   sendResponse,
   fail
 } = require('./response');
+
 
 module.exports = service => async (req, res) => {
   const response = sendResponse(res);
@@ -11,13 +13,10 @@ module.exports = service => async (req, res) => {
       errorMessage: '반환값이 명시되지 않았습니다.'
     }));
   } catch (e) {
-    console.error(e);
-    if (e.response) {
-      const error = e.response;
-      const {
-        httpCode = 500, data = {}
-      } = error;
-      res.status(httpCode).json(data);
+    if (config.NODE_ENV === 'development') console.error(e)
+    if (e.status !== undefined) {
+      const httpCode = e.httpCode || 500;
+      return res.status(httpCode).json(e);
     }
     response(fail.error.internalError({
       errorMessage: e.message || ''
