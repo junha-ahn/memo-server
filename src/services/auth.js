@@ -36,19 +36,16 @@ module.exports = class UserService {
     const user = userRecord.toObject();
     this.logger.silly('Checking password');
     const validPassword = await bcrypt.compareSync(password, user.password);
-    if (validPassword) {
-      this.logger.silly('Password is valid!');
-      const clientVerifier = new Date().valueOf()
-      Reflect.deleteProperty(user, 'password');
-      this.logger.silly('Generating JWT');
-      return {
-        user,
-        token: await token.generateToken(user, clientVerifier),
-        clientVerifier,
-      };
-    } else {
-      throw fail.auth.login()
-    }
+    if (!validPassword) throw fail.auth.login();
+    this.logger.silly('Password is valid!');
+    const clientVerifier = new Date().valueOf()
+    Reflect.deleteProperty(user, 'password');
+    this.logger.silly('Generating JWT');
+    return {
+      user,
+      token: await token.generateToken(user, clientVerifier),
+      clientVerifier,
+    };
   }
   async FindEmail(email) {
     const userRecord = await this.userModel.findOne({
@@ -63,13 +60,10 @@ module.exports = class UserService {
     const user = userRecord.toObject();
     this.logger.silly('Checking password');
     const validPassword = await bcrypt.compareSync(password, user.password);
-    if (validPassword) {
-      this.logger.silly('Password is valid!');
-      return await this.userModel.deleteOne({
-        _id
-      })
-    } else {
-
-    }
+    if (!validPassword) throw fail.auth.login();
+    this.logger.silly('Password is valid!');
+    return await this.userModel.deleteOne({
+      _id
+    })
   }
 }
