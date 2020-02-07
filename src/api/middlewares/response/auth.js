@@ -31,11 +31,11 @@ module.exports = (Response) => {
     '패스워드를 다시 입력해주세요.',
   )
 
-  success.authentication = (token, data) => Success(
+  success.authentication = (token, info) => Success(
     200,
     '로그인 상태 확인에 성공했습니다.', {
       token,
-      data
+      info
     }
   )
 
