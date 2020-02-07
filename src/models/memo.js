@@ -15,11 +15,11 @@ const MemoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  tagIds: {
+  tagIds: [{
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     default: []
-  }
+  }],
 }, {
   timestamps: {
     createdAt: 'createdAt',
