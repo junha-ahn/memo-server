@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = $require('config');
 
 module.exports = async () => {
-  if (config.NODE_ENV !== 'production') {
+  if (config.NODE_ENV === 'development') {
     mongoose.set('debug', true);
   }
   mongoose.Promise = global.Promise;
