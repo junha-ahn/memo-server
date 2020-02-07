@@ -12,9 +12,11 @@ const tester = {
   name: '테스트'
 }
 describe('Tag', () => {
+  before(async () => {
+    await chai.request(server).post('/api/auth/sign-up').send(tester)
+  })
   beforeEach(async () => { //Before test we empty the database
     await Tag.deleteMany();
-    await chai.request(server).post('/api/auth/sign-up').send(tester)
   });
   describe('/GET Tag', () => {
     describe('성공시', () => {
