@@ -1,5 +1,5 @@
 const validator = require("express-validator");
-
+const mongoose = require('mongoose');
 exports.id = validator
   .param("id")
   .optional({
@@ -16,16 +16,29 @@ exports.password = validator.body("password").isLength({
   max: 20
 });
 
-exports.page_num = validator.query("page_num").isInt();
-exports.page_length = validator.query("page_length").isInt();
+exports.pageNum = validator.query("pageNum").isInt();
+exports.pageLength = validator.query("pageLength").isInt();
 
 exports.getterValidations = [
   validator
-  .param("id")
+  .param("_id")
   .optional({
     nullable: true
-  })
-  .isInt(),
-  validator.query("page_num").isInt(),
-  validator.query("page_length").isInt()
+  }).custom((value) => mongoose.Types.ObjectId.isValid(value)),
+  validator.query('pageNum').optional().toInt().isInt().custom((value, {
+    req
+  }) => {
+    if (req.params._id !== undefined) return true;
+    if (isNaN(Number(value))) return false;
+    return true;
+  }),
+  validator.query('pageLength').optional().toInt().isInt().custom((value, {
+    req
+  }) => {
+    if (req.params._id !== undefined) return true;
+    if (isNaN(Number(value))) return false;
+    const MAX = 1000;
+    if (value > MAX) return false;
+    return true;
+  }),
 ];

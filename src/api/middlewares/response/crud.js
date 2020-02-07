@@ -23,8 +23,8 @@ module.exports = (Response) => {
   success.getItems = (results, count) => Success(
     200,
     '목록을 조회했습니다.', {
+      count,
       results,
-      count
     },
   )
 

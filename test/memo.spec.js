@@ -35,8 +35,8 @@ describe('Memo', () => {
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
-            page_num: 1,
-            page_length: 100,
+            pageNum: 1,
+            pageLength: 100,
           })
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equal(true);
@@ -50,8 +50,8 @@ describe('Memo', () => {
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
-            page_num: 1,
-            page_length: 100,
+            pageNum: 1,
+            pageLength: 100,
             tagIds: [1, 2, 3],
           })
         expect(res).to.have.status(200);
@@ -77,8 +77,8 @@ describe('Memo', () => {
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
-            page_num: 1,
-            page_length: 100,
+            pageNum: 1,
+            pageLength: 100,
             tagIds: ['id']
           })
         expect(res).to.have.status(422);

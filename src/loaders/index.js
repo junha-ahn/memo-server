@@ -11,13 +11,23 @@ module.exports = async app => {
     name: "userModel",
     model: $require("models/user")
   };
+  const memoModel = {
+    name: "memoModel",
+    model: $require("models/memo")
+  };
+  const tagModel = {
+    name: "tagModel",
+    model: $require("models/tag")
+  };
+
+
 
   dependencyInjectorLoader({
     mongoConnection,
     models: [
-      userModel
-      // salaryModel,
-      // whateverModel
+      userModel,
+      memoModel,
+      tagModel,
     ]
   });
   Logger.info("✌️ Dependency Injector loaded");

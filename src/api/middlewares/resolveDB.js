@@ -10,15 +10,6 @@ const create = result => {
     throw err
   }
 }
-const getItem = result => {
-  try {
-    return result ?
-      success.crud.getItem(result) :
-      fail.crud.notFound()
-  } catch (err) {
-    throw err
-  }
-}
 
 const remove = result => {
   try {
@@ -30,8 +21,37 @@ const remove = result => {
   }
 }
 
+const getItem = async data => {
+  try {
+    const result = await data
+    return result ?
+      success.crud.getItem(result) :
+      fail.crud.notFound()
+  } catch (err) {
+    throw err
+  }
+}
+const getItems = async data => {
+  try {
+    const result = await data
+    return success.crud.getItems(result.rows, result.count)
+  } catch (err) {
+    throw err
+  }
+}
+
+const get = _id => async data => {
+  try {
+    return await _id ? getItem(data) : getItems(data)
+  } catch (err) {
+    throw err
+  }
+}
+
 module.exports = {
   create,
-  getItem,
   delete: remove,
+  getItem,
+  getItems,
+  get,
 };
