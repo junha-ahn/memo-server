@@ -15,10 +15,9 @@ module.exports = class MemoService {
     isFixed,
     title,
     content,
-    tags,
+    tagIds,
   }) {
     this.logger.silly('Creating memo db record');
-    const tagIds = null;
     const memoRecord = await this.memoModel.create({
       userId,
       isFixed,
@@ -33,15 +32,13 @@ module.exports = class MemoService {
     isFixed,
     title,
     content,
-    tags,
+    tagIds,
   }) {
-    this.logger.silly('Creating memo db record');
-    const tagIds = null;
+    this.logger.silly('Updating memo db record');
     const result = await this.memoModel.updateOne({
       _id,
       userId,
     }, {
-      userId,
       isFixed,
       title,
       content,
@@ -50,8 +47,7 @@ module.exports = class MemoService {
     return result
   }
   async delete(_id, userId) {
-    this.logger.silly('Creating memo db record');
-    const tagIds = null;
+    this.logger.silly('Deleting memo db record');
     const result = await this.memoModel.deleteOne({
       _id,
       userId,

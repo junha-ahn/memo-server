@@ -25,9 +25,9 @@ module.exports = app => {
     validator.body('content').isLength({
       min: 2
     }),
-    validator.body('tags').optional({
+    validator.body('tagIds').optional({
       nullable: true
-    }).isArray(),
+    }).toArray().isArray(),
   ]
   router.post(
     '/',
@@ -36,7 +36,7 @@ module.exports = app => {
     ]),
     container(async req => {
       const logger = Container.get('logger');
-      logger.debug('Calling Post Memo endpoint with body: %o', req.body);
+      logger.debug('Calling Create Memo endpoint with body: %o', req.body);
       const memoServiceInstance = Container.get(MemoService);
       return resolveDB.create(await memoServiceInstance.create(req.currentUser._id, req.body));
     }));
