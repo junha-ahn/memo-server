@@ -60,7 +60,6 @@ module.exports = class TagService {
   }
   async delete(_id, userId) {
     this.logger.silly('Deleting tag db record');
-    // Memo -> delete TagIds?...
     const result = await this.tagModel.deleteOne({
       _id,
       userId,

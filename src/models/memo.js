@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const User = require('./user');
+const Tag = require('./tag');
 const MemoSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,8 +20,9 @@ const MemoSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  tagIds: [{
+  tags: [{
     type: mongoose.Schema.Types.ObjectId,
+    ref: Tag,
     required: true,
     default: []
   }],

@@ -13,9 +13,20 @@ const {
 module.exports = app => {
   app.use('/memo', router);
 
-  router.get(['/', '/:id'], container(async req => {
-
-  }));
+  router.get(
+    ['/', '/:_id'],
+    isAuth,
+    validator.mw([
+      ...validator.presets.getterValidations,
+    ]),
+    container(async req => {
+      const _id = req.params._id;
+      const logger = Container.get('logger');
+      logger.debug('Calling Get Memo endpoint with params: %o queries: %o', req.params, req.query);
+      const memoServiceInstance = Container.get(MemoService);
+      return resolveDB.get(_id)(await memoServiceInstance.get(_id)(req.currentUser._id, req.query));
+    })
+  );
 
   const setterValidator = [
     validator.body('isFixed').isIn([0, 1]),
@@ -25,7 +36,7 @@ module.exports = app => {
     validator.body('content').isLength({
       min: 2
     }),
-    validator.body('tagIds').optional({
+    validator.body('tags').optional({
       nullable: true
     }).toArray().isArray(),
   ]

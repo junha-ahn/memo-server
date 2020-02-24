@@ -52,7 +52,7 @@ describe('Memo', () => {
           .send({
             pageNum: 1,
             pageLength: 100,
-            tagIds: [1, 2, 3],
+            tags: [1, 2, 3],
           })
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equal(true);
@@ -72,14 +72,14 @@ describe('Memo', () => {
         expect(res.body.status).to.deep.equal(false);
         expect(res.body.data).to.be.an('array');
       });
-      it('tagIds 값 오류시, validator 오류를 반환한다', async () => {
+      it('tags 값 오류시, validator 오류를 반환한다', async () => {
         const res = await chai.request(server).get('/api/memo')
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
             pageNum: 1,
             pageLength: 100,
-            tagIds: ['id']
+            tags: ['id']
           })
         expect(res).to.have.status(422);
         expect(res.body.status).to.deep.equal(false);
@@ -101,7 +101,7 @@ describe('Memo', () => {
         expect(res.body.status).to.deep.equal(true);
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('_id');
-        expect(res.body.data).to.have.property('tagIds');
+        expect(res.body.data).to.have.property('tags');
       });
       it('tags 반환', async () => {
         const res = await chai.request(server).get('/api/memo/_not_found')
@@ -113,9 +113,9 @@ describe('Memo', () => {
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('_id');
         expect(res.body.data).to.have.property('tags');
-        expect(res.body.data).to.have.property('tagIds');
+        expect(res.body.data).to.have.property('tags');
         expect(res.body.data.tags).to.be.an('array');
-        expect(res.body.data.tagIds).to.be.an('array');
+        expect(res.body.data.tags).to.be.an('array');
       });
     });
     describe('실패시', () => {
@@ -145,7 +145,7 @@ describe('Memo', () => {
         expect(res.body.status).to.deep.equal(true);
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('_id');
-        expect(res.body.data).to.have.property('tagIds');
+        expect(res.body.data).to.have.property('tags');
       });
     });
     describe('실패시', () => {
