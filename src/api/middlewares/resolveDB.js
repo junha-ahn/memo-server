@@ -14,7 +14,7 @@ const create = result => {
 const update = async data => {
   try {
     const result = await data
-    return result.ok ? success.crud.updateItem() : fail.error.BadRequest('변경이 사항 없습니다', result)
+    return result.nModified ? success.crud.updateItem() : fail.error.BadRequest('변경이 사항 없습니다', result)
   } catch (err) {
     throw err
   }
@@ -23,9 +23,9 @@ const update = async data => {
 const remove = async data => {
   try {
     const result = await data
-    return result && result.ok ?
+    return result && result.deletedCount ?
       success.crud.deleteItem() :
-      fail.crud.notFound()
+      fail.error.BadRequest('변경이 사항 없습니다', result)
   } catch (err) {
     throw err
   }

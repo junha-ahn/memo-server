@@ -63,9 +63,6 @@ module.exports = app => {
   router.delete(
     '/:_id',
     isAuth,
-    validator.mw([
-      ...setterValidator,
-    ]),
     container(async req => {
       const logger = Container.get('logger');
       logger.debug('Calling Delete Tag endpoint');

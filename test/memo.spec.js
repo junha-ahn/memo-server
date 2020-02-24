@@ -182,7 +182,7 @@ describe('Memo', () => {
     describe('성공시', () => {
       it('201 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -195,7 +195,7 @@ describe('Memo', () => {
       });
       it('태그 추가시, 201 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -209,7 +209,7 @@ describe('Memo', () => {
       });
       it('태그 제거시, 201 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -242,7 +242,7 @@ describe('Memo', () => {
     describe('성공시', () => {
       it('200 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).delete(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).delete(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send()
@@ -265,7 +265,7 @@ describe('Memo', () => {
     describe('성공시', () => {
       it('200 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/fix/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/fix/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -278,7 +278,7 @@ describe('Memo', () => {
     describe('실패시', () => {
       it('이미 해당 상태일 경우, 409 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/fix/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/fix/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
