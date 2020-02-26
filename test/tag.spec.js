@@ -3,6 +3,7 @@ const chaiHttp = require('chai-http');
 const server = require('../src/app');
 const Tag = $require('models/tag');
 const expect = chai.expect;
+const NOT_FOUND_ID = '5e53d01b7d7d870418d444d3'
 
 chai.use(chaiHttp);
 
@@ -13,6 +14,7 @@ const tester = {
 }
 
 describe('Tag', () => {
+  const auth = {};
   const tmp = new Tag({
     name: '테스트',
   });
@@ -25,13 +27,16 @@ describe('Tag', () => {
   });
   describe('/GET tag는', () => {
     describe('성공시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('로그인 후 요청시, 200반환', async () => {
         const res = await chai.request(server)
           .get('/api/tag')
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
+          .query({
+            pageNum: 1,
+            pageLength: 100
+          });
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equal(true);
         expect(res.body.data).to.be.an('object');
@@ -41,11 +46,14 @@ describe('Tag', () => {
       });
     })
     describe('실패시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('비로그인 요청시, 401 반환', async () => {
         const res = await chai.request(server)
           .get('/api/tag')
+          .query({
+            pageNum: 1,
+            pageLength: 100
+          });
         expect(res).to.have.status(401);
         expect(res.body.status).to.deep.equal(false);
       });
@@ -54,10 +62,12 @@ describe('Tag', () => {
   })
   describe('/GET /tag/:_id는', () => {
     describe('성공시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('200 반환', async () => {
-        const tag = await tmp.save()
+        const tag = await new Tag({
+          userId: auth.info._id,
+          name: '테스트',
+        }).save()
         const res = await chai.request(server).get(`/api/tag/${tag._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
@@ -69,10 +79,9 @@ describe('Tag', () => {
       });
     });
     describe('실패시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('존재하지 않는 메모를 찾을 경우, 404 반환', async () => {
-        const res = await chai.request(server).get('/api/tag/5e53d01b7d7d870418d444d3')
+        const res = await chai.request(server).get(`/api/tag/${NOT_FOUND_ID}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send()
@@ -83,7 +92,6 @@ describe('Tag', () => {
   })
   describe('/POST /tag는', () => {
     describe('성공시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('201을 리턴한다, 생성한 객체를 반환한다', async () => {
         const res = await chai.request(server).post('/api/tag')
@@ -99,7 +107,6 @@ describe('Tag', () => {
       });
     });
     describe('실패시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('name 값 오류시, validator 오류를 반환한다', async () => {
         const res = await chai.request(server).post('/api/tag')
@@ -116,10 +123,12 @@ describe('Tag', () => {
   })
   describe('/PUT /tag/:_id는', () => {
     describe('성공시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('201 반환', async () => {
-        const tag = await tmp.save()
+        const tag = await new Tag({
+          userId: auth.info._id,
+          name: '테스트',
+        }).save()
         const res = await chai.request(server).put(`/api/tag/${tag._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
@@ -131,7 +140,6 @@ describe('Tag', () => {
       });
     });
     describe('실패시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('존재하지 않는 메모를 찾을 경우, 400 반환', async () => {
         const res = await chai.request(server).put('/api/tag/5e53d01b7d7d870418d444d3')
@@ -147,10 +155,12 @@ describe('Tag', () => {
   })
   describe('/DELETE /tag/:_id는', () => {
     describe('성공시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('200 반환', async () => {
-        const tag = await tmp.save()
+        const tag = await new Tag({
+          userId: auth.info._id,
+          name: '테스트',
+        }).save()
         const res = await chai.request(server).delete(`/api/tag/${tag._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
@@ -160,7 +170,6 @@ describe('Tag', () => {
       });
     });
     describe('실패시', () => {
-      const auth = {};
       before(loginUser(auth));
       it('존재하지 않는 메모를 찾을 경우, 400 반환', async () => {
         const res = await chai.request(server).delete('/api/tag/5e53d01b7d7d870418d444d3')
@@ -181,6 +190,7 @@ function loginUser(auth) {
       .send(tester)
       .end((err, res) => {
         auth.token = res.body.data.token
+        auth.info = res.body.data.info
         auth.cookies = res.headers['set-cookie'].pop().split(';')[0];
         done();
       })
