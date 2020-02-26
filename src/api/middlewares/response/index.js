@@ -1,5 +1,6 @@
-const Response = require('./Response')
+const _ = require('lodash')
 
+const Response = require('./Response')
 const auth = require('./auth')(Response)
 const crud = require('./crud')(Response)
 const error = require('./error')(Response)
@@ -14,11 +15,11 @@ const sendResponse = res => (result = {}) => (
 const {
   success,
   fail
-} = Object.entries({
+} = _.reduce(_.toPairs({
   auth,
   crud,
   error,
-}).reduce((acc, curr) => {
+}), (acc, curr) => {
   const name = curr[0];
   const value = curr[1];
 

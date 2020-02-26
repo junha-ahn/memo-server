@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const {
   produce
 } = require("immer");
@@ -15,13 +16,11 @@ const getAndCnt = (...actions) =>
   });
 
 const trimObject = src =>
-  produce(src, draft =>
-    Object.entries(draft).forEach(([key, value]) => {
-      if (value === undefined) {
-        delete draft[key];
-      }
+  produce(src, draft => {
+    _.forEach(_.toPairs(draft), ([key, value]) => {
+      if (value === undefined) delete draft[key];
     })
-  );
+  });
 
 module.exports = {
   getSkip,
