@@ -35,8 +35,8 @@ describe('Memo', () => {
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
-            page_num: 1,
-            page_length: 100,
+            pageNum: 1,
+            pageLength: 100,
           })
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equal(true);
@@ -50,9 +50,9 @@ describe('Memo', () => {
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
-            page_num: 1,
-            page_length: 100,
-            tagIds: [1, 2, 3],
+            pageNum: 1,
+            pageLength: 100,
+            tags: [1, 2, 3],
           })
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equal(true);
@@ -72,14 +72,14 @@ describe('Memo', () => {
         expect(res.body.status).to.deep.equal(false);
         expect(res.body.data).to.be.an('array');
       });
-      it('tagIds 값 오류시, validator 오류를 반환한다', async () => {
+      it('tags 값 오류시, validator 오류를 반환한다', async () => {
         const res = await chai.request(server).get('/api/memo')
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
-            page_num: 1,
-            page_length: 100,
-            tagIds: ['id']
+            pageNum: 1,
+            pageLength: 100,
+            tags: ['id']
           })
         expect(res).to.have.status(422);
         expect(res.body.status).to.deep.equal(false);
@@ -101,7 +101,7 @@ describe('Memo', () => {
         expect(res.body.status).to.deep.equal(true);
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('_id');
-        expect(res.body.data).to.have.property('tagIds');
+        expect(res.body.data).to.have.property('tags');
       });
       it('tags 반환', async () => {
         const res = await chai.request(server).get('/api/memo/_not_found')
@@ -113,9 +113,9 @@ describe('Memo', () => {
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('_id');
         expect(res.body.data).to.have.property('tags');
-        expect(res.body.data).to.have.property('tagIds');
+        expect(res.body.data).to.have.property('tags');
         expect(res.body.data.tags).to.be.an('array');
-        expect(res.body.data.tagIds).to.be.an('array');
+        expect(res.body.data.tags).to.be.an('array');
       });
     });
     describe('실패시', () => {
@@ -145,7 +145,7 @@ describe('Memo', () => {
         expect(res.body.status).to.deep.equal(true);
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('_id');
-        expect(res.body.data).to.have.property('tagIds');
+        expect(res.body.data).to.have.property('tags');
       });
     });
     describe('실패시', () => {
@@ -182,7 +182,7 @@ describe('Memo', () => {
     describe('성공시', () => {
       it('201 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -195,7 +195,7 @@ describe('Memo', () => {
       });
       it('태그 추가시, 201 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -209,7 +209,7 @@ describe('Memo', () => {
       });
       it('태그 제거시, 201 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -242,7 +242,7 @@ describe('Memo', () => {
     describe('성공시', () => {
       it('200 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).delete(`/api/memo/${memo._id}`)
+        const res = await chai.request(server).delete(`/api/memo/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send()
@@ -265,7 +265,7 @@ describe('Memo', () => {
     describe('성공시', () => {
       it('200 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/fix/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/fix/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({
@@ -278,7 +278,7 @@ describe('Memo', () => {
     describe('실패시', () => {
       it('이미 해당 상태일 경우, 409 반환', async () => {
         const memo = await tmp.save()
-        const res = await chai.request(server).put(`/api/memo/fix/${memo._id}`)
+        const res = await chai.request(server).put(`/api/memo/fix/${memo._id.toString()}`)
           .set('Authorization', `Bearer ${auth.token}`)
           .set('Cookie', auth.cookies)
           .send({

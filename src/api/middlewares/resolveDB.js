@@ -10,8 +10,30 @@ const create = result => {
     throw err
   }
 }
-const getItem = result => {
+
+const update = async data => {
   try {
+    const result = await data
+    return result.nModified ? success.crud.updateItem() : fail.error.BadRequest('변경이 사항 없습니다', result)
+  } catch (err) {
+    throw err
+  }
+}
+
+const remove = async data => {
+  try {
+    const result = await data
+    return result && result.deletedCount ?
+      success.crud.deleteItem() :
+      fail.error.BadRequest('변경이 사항 없습니다', result)
+  } catch (err) {
+    throw err
+  }
+}
+
+const getItem = async data => {
+  try {
+    const result = await data
     return result ?
       success.crud.getItem(result) :
       fail.crud.notFound()
@@ -19,12 +41,18 @@ const getItem = result => {
     throw err
   }
 }
-
-const remove = result => {
+const getItems = async data => {
   try {
-    return result && result.deletedCount ?
-      success.crud.deleteItem() :
-      fail.crud.notFound()
+    const result = await data
+    return success.crud.getItems(result.rows, result.count)
+  } catch (err) {
+    throw err
+  }
+}
+
+const get = _id => async data => {
+  try {
+    return await _id ? getItem(data) : getItems(data)
   } catch (err) {
     throw err
   }
@@ -32,6 +60,9 @@ const remove = result => {
 
 module.exports = {
   create,
-  getItem,
   delete: remove,
+  update,
+  getItem,
+  getItems,
+  get,
 };

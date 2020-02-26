@@ -9,6 +9,7 @@ const router = () => {
   const app = Router();
   app.use(attachCurrentUser);
   require('./routes/auth')(app);
+  require('./routes/tag')(app);
   require('./routes/memo')(app);
   return app;
 };

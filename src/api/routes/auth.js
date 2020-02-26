@@ -1,5 +1,5 @@
-const Container = require('typedi').Container;
 const router = require('express').Router();
+const Container = require('typedi').Container;
 const AuthService = $require('services/auth');
 const {
   success,
@@ -69,8 +69,6 @@ module.exports = app => {
       const logger = Container.get('logger');
       logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
       const authServiceInstance = Container.get(AuthService);
-      const userRecord = await authServiceInstance.FindEmail(email);
-      if (userRecord) return fail.error.conflict('이미 사용중인 이메일입니다.');
       return resolveDB.create(await authServiceInstance.SignUp({
         email,
         password,
