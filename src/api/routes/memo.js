@@ -18,7 +18,7 @@ module.exports = app => {
     isAuth,
     validator.mw([
       ...validator.presets.getterValidations,
-      validator.query('isFixed').isIn([0, 1]),
+      validator.query('isFixed').optional().isIn([0, 1]),
     ]),
     container(async req => {
       const _id = req.params._id;
@@ -52,6 +52,7 @@ module.exports = app => {
 
   router.put('/:_id',
     validator.mw([
+      validator.presets._id,
       ...setterValidator,
     ]),
     container(async req => {
@@ -61,10 +62,14 @@ module.exports = app => {
       return resolveDB.update(await memoServiceInstance.update(req.params._id, req.currentUser._id, req.body));
     }));
 
-  router.delete('/:_id', container(async req => {
-    const logger = Container.get('logger');
-    logger.debug('Calling Delete Memo endpoint with body: %o', req.body);
-    const memoServiceInstance = Container.get(MemoService);
-    return resolveDB.delete(await memoServiceInstance.delete(req.params._id, req.currentUser._id));
-  }));
+  router.delete('/:_id',
+    validator.mw([
+      validator.presets._id,
+    ]),
+    container(async req => {
+      const logger = Container.get('logger');
+      logger.debug('Calling Delete Memo endpoint with body: %o', req.body);
+      const memoServiceInstance = Container.get(MemoService);
+      return resolveDB.delete(await memoServiceInstance.delete(req.params._id, req.currentUser._id));
+    }));
 };
