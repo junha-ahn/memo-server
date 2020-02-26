@@ -18,6 +18,7 @@ module.exports = app => {
     isAuth,
     validator.mw([
       ...validator.presets.getterValidations,
+      validator.query('isFixed').isIn([0, 1]),
     ]),
     container(async req => {
       const _id = req.params._id;
@@ -36,9 +37,6 @@ module.exports = app => {
     validator.body('content').isLength({
       min: 2
     }),
-    validator.body('tags').optional({
-      nullable: true
-    }).toArray().isArray(),
   ]
   router.post(
     '/',
@@ -68,9 +66,5 @@ module.exports = app => {
     logger.debug('Calling Delete Memo endpoint with body: %o', req.body);
     const memoServiceInstance = Container.get(MemoService);
     return resolveDB.delete(await memoServiceInstance.delete(req.params._id, req.currentUser._id));
-  }));
-
-  router.put('/fix/:_id', container(async req => {
-
   }));
 };

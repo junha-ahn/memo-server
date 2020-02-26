@@ -20,10 +20,12 @@ module.exports = class MemoService {
     return (userId, {
       pageLength,
       pageNum,
-      tagIds
+      isFixed,
+      tagIds,
     }) => {
       const query = {
         userId,
+        isFixed,
         ...trimObject({
           tags: tagIds
         })
