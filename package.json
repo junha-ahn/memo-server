@@ -28,7 +28,7 @@
     "express-session": "^1.17.0",
     "express-validator": "^6.3.1",
     "helmet": "^3.21.2",
-    "immer": "^5.3.6",
+    "immer": "^8.0.1",
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.27",
     "mongoose": "^5.8.4",
